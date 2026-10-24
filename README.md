@@ -14,6 +14,19 @@ Open [http://localhost:8080](http://localhost:8080). Links are stored in `data/s
 
 On Windows, use `gradlew.bat run` instead.
 
+## CLI
+
+The CLI uses the same SQLite database as the server and does not require the server to be running:
+
+```bash
+./gradlew cli --args='create https://example.com/a-long-page'
+./gradlew cli --args='list'
+```
+
+On Windows, use `gradlew.bat cli --args="create https://example.com/a-long-page"` and `gradlew.bat cli --args="list"`.
+The short URL uses `SHORTENER_BASE_URL` when set; otherwise it uses `http://localhost:<PORT>` (default port `8080`).
+Set `SHORTENER_DB_FILE` to use a database other than `data/shortener.sqlite`.
+
 ## API
 
 Create a short link:

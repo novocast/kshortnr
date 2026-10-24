@@ -27,6 +27,13 @@ application {
     mainClass.set("com.example.shortener.ApplicationKt")
 }
 
+tasks.register<JavaExec>("cli") {
+    group = "application"
+    description = "Manage short links from the command line"
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass.set("com.example.shortener.CliKt")
+}
+
 tasks.test {
     useJUnitPlatform()
 }

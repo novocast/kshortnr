@@ -92,7 +92,7 @@ fun Application.module(store: ShortLinkStore = ShortLinkStore.fromEnvironment())
     }
 }
 
-private fun normalizeHttpUrl(input: String): String? {
+internal fun normalizeHttpUrl(input: String): String? {
     val value = input.trim()
     if (value.isEmpty() || value.length > 2048) return null
 
