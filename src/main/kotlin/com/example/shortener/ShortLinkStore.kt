@@ -71,6 +71,33 @@ class ShortLinkStore(private val databaseFile: Path) {
         }
     }
 
+    fun find(code: String): ShortLink? = connect().use { connection ->
+        connection.prepareStatement(
+            "SELECT code, target_url, created_at, clicks FROM links WHERE code = ?",
+        ).use { statement ->
+            statement.setString(1, code)
+            statement.executeQuery().use { results ->
+                if (results.next()) {
+                    ShortLink(
+                        code = results.getString("code"),
+                        targetUrl = results.getString("target_url"),
+                        createdAt = results.getString("created_at"),
+                        clicks = results.getInt("clicks"),
+                    )
+                } else {
+                    null
+                }
+            }
+        }
+    }
+
+    fun delete(code: String): Boolean = connect().use { connection ->
+        connection.prepareStatement("DELETE FROM links WHERE code = ?").use { statement ->
+            statement.setString(1, code)
+            statement.executeUpdate() == 1
+        }
+    }
+
     fun incrementAndGetTarget(code: String): String? = connect().use { connection ->
         connection.prepareStatement("UPDATE links SET clicks = clicks + 1 WHERE code = ?").use { statement ->
             statement.setString(1, code)

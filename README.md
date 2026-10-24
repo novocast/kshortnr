@@ -21,11 +21,17 @@ The CLI uses the same SQLite database as the server and does not require the ser
 ```bash
 ./gradlew cli --args='create https://example.com/a-long-page'
 ./gradlew cli --args='list'
+./gradlew cli --args='show SHORT_CODE'
+./gradlew cli --args='stats --json'
+./gradlew cli --args='delete SHORT_CODE'
+./gradlew cli --args='delete SHORT_CODE --yes'
 ```
 
 On Windows, use `gradlew.bat cli --args="create https://example.com/a-long-page"` and `gradlew.bat cli --args="list"`.
 The short URL uses `SHORTENER_BASE_URL` when set; otherwise it uses `http://localhost:<PORT>` (default port `8080`).
 Set `SHORTENER_DB_FILE` to use a database other than `data/shortener.sqlite`.
+Add `--json` to `create`, `list`, `show`, `delete`, or `stats` for machine-readable output. `delete` asks for confirmation unless `--yes` is provided.
+The `easter-egg` command prints a short-link proverb; `forecast` always returns a Rickroll URL.
 
 ## API
 
