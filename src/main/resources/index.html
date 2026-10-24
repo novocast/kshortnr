@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f2f2ec">
+  <title>Shortform | Link desk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #20251f;
+      --muted: #6c716a;
+      --line: #d9dbd2;
+      --paper: #f2f2ec;
+      --white: #fbfbf7;
+      --green: #245b45;
+      --green-dark: #183d30;
+      --lime: #d4ed76;
+      --coral: #e98464;
+      --mono: "DM Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+      --sans: "Manrope", "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      background-color: var(--paper);
+      background-image: radial-gradient(#bdc2b5 0.65px, transparent 0.65px);
+      background-size: 18px 18px;
+      font-family: var(--sans);
+    }
+
+    button, input { font: inherit; }
+
+    .shell {
+      width: min(100% - 40px, 1040px);
+      margin: 0 auto;
+      padding: 30px 0 64px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding-bottom: 26px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand { display: flex; align-items: center; gap: 11px; }
+    .brand-mark {
+      display: grid;
+      width: 34px;
+      aspect-ratio: 1;
+      place-items: center;
+      border-radius: 10px 10px 10px 3px;
+      color: var(--lime);
+      background: var(--green-dark);
+      font-size: 19px;
+      font-weight: 800;
+    }
+    .brand-name { font-size: 15px; font-weight: 800; letter-spacing: 0; }
+    .top-note {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+    .live-dot { width: 7px; height: 7px; border-radius: 50%; background: #67a779; }
+
+    .intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 220px;
+      align-items: end;
+      gap: 28px;
+      padding: 54px 0 34px;
+    }
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--green);
+      font-family: var(--mono);
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 620px;
+      margin: 0;
+      font-size: 58px;
+      font-weight: 700;
+      line-height: 1.06;
+    }
+    h1 span { color: var(--green); }
+    .metric {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 0 5px 20px;
+      border-left: 1px solid var(--line);
+    }
+    .metric-label { color: var(--muted); font-size: 12px; }
+    .metric-value { margin-top: 4px; font-size: 30px; font-weight: 700; line-height: 1; }
+    .metric-total { color: var(--muted); font-family: var(--mono); font-size: 12px; }
+
+    .composer {
+      padding: 24px;
+      border: 1px solid #d2d5ca;
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: 0 5px 0 #e1e2d8;
+    }
+    .composer-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 17px;
+    }
+    .composer-heading h2 { margin: 0; font-size: 15px; font-weight: 700; }
+    .composer-heading span { color: var(--muted); font-family: var(--mono); font-size: 11px; }
+    .form-row { display: flex; gap: 10px; }
+    .url-input {
+      width: 100%;
+      min-width: 0;
+      height: 50px;
+      padding: 0 15px;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      outline: none;
+      color: var(--ink);
+      background: #fff;
+      font-size: 14px;
+      transition: border-color 140ms ease, box-shadow 140ms ease;
+    }
+    .url-input:focus { border-color: var(--green); box-shadow: 0 0 0 3px #245b451c; }
+    .url-input::placeholder { color: #999d94; }
+    .submit-button {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-width: 148px;
+      height: 50px;
+      padding: 0 18px;
+      border: 0;
+      border-radius: 5px;
+      color: #fff;
+      background: var(--green);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      transition: background 140ms ease, transform 140ms ease;
+    }
+    .submit-button:hover { background: var(--green-dark); }
+    .submit-button:active { transform: translateY(1px); }
+    .submit-button:disabled { opacity: .65; cursor: wait; }
+    .result {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 14px;
+      padding: 12px 13px;
+      border-radius: 5px;
+      background: #eaf1df;
+    }
+    .result[hidden] { display: none; }
+    .result-link { min-width: 0; overflow: hidden; color: var(--green-dark); font-family: var(--mono); font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+    .copy-button, .row-copy {
+      display: inline-grid;
+      flex: 0 0 auto;
+      width: 34px;
+      aspect-ratio: 1;
+      place-items: center;
+      border: 1px solid #becdb6;
+      border-radius: 4px;
+      color: var(--green-dark);
+      background: transparent;
+      cursor: pointer;
+    }
+    .copy-button:hover, .row-copy:hover { background: #dce8ce; }
+    .status { min-height: 18px; margin: 10px 0 0; color: #a13e2a; font-size: 12px; }
+
+    .list-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 43px 0 12px;
+    }
+    .list-header h2 { margin: 0; font-size: 17px; font-weight: 700; }
+    .list-header p { margin: 0; color: var(--muted); font-family: var(--mono); font-size: 11px; }
+    .link-list { border-top: 1px solid var(--line); }
+    .link-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.5fr) 76px 34px;
+      align-items: center;
+      gap: 18px;
+      min-height: 76px;
+      border-bottom: 1px solid var(--line);
+      animation: rise 280ms ease both;
+    }
+    .link-short { overflow: hidden; color: var(--green); font-family: var(--mono); font-size: 13px; text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
+    .link-short:hover { text-decoration: underline; }
+    .link-target { overflow: hidden; color: var(--muted); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+    .link-clicks { color: var(--ink); font-family: var(--mono); font-size: 12px; text-align: right; }
+    .row-copy { width: 32px; border-color: transparent; }
+    .empty-state { padding: 26px 0; color: var(--muted); font-size: 13px; }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      margin-top: 50px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+    .footer strong { color: var(--green); font-weight: 500; }
+    .icon { display: block; width: 16px; height: 16px; }
+
+    @keyframes rise { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 680px) {
+      .shell { width: min(100% - 28px, 540px); padding-top: 20px; }
+      .intro { grid-template-columns: 1fr; gap: 22px; padding: 38px 0 25px; }
+      h1 { font-size: 42px; }
+      .metric { justify-content: start; gap: 26px; padding: 0; border: 0; }
+      .metric-value { font-size: 24px; }
+      .composer { padding: 17px; }
+      .form-row { flex-direction: column; }
+      .submit-button { width: 100%; }
+      .link-row { grid-template-columns: minmax(0, 1fr) 58px 32px; gap: 10px; padding: 12px 0; }
+      .link-short { grid-column: 1; }
+      .link-target { grid-column: 1; grid-row: 2; }
+      .link-clicks { grid-column: 2; grid-row: 1 / span 2; }
+      .row-copy { grid-column: 3; grid-row: 1 / span 2; }
+      .top-note { font-size: 10px; }
+      .list-header { margin-top: 34px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">s.</span>
+        <span class="brand-name">shortform</span>
+      </div>
+      <div class="top-note"><span class="live-dot" aria-hidden="true"></span> LINK DESK <span id="today"></span></div>
+    </header>
+
+    <section class="intro" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">A little less URL</p>
+        <h1 id="page-title">Make long links <span>go further.</span></h1>
+      </div>
+      <div class="metric" aria-live="polite">
+        <div><div class="metric-label">Links shortened</div><div class="metric-value" id="link-count">0</div></div>
+        <div><div class="metric-label">Total visits</div><div class="metric-value" id="visit-count">0</div></div>
+      </div>
+    </section>
+
+    <section class="composer" aria-labelledby="composer-title">
+      <div class="composer-heading">
+        <h2 id="composer-title">Shorten a destination</h2>
+        <span>HTTP / HTTPS</span>
+      </div>
+      <form id="shorten-form" novalidate>
+        <div class="form-row">
+          <input class="url-input" id="url-input" name="url" type="url" placeholder="Paste a long URL here" autocomplete="url" required aria-label="URL to shorten">
+          <button class="submit-button" id="submit-button" type="submit">
+            <span>Make it short</span>
+            <svg class="icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </form>
+      <div class="result" id="result" hidden>
+        <a class="result-link" id="result-link" href="#"></a>
+        <button class="copy-button" id="result-copy" type="button" aria-label="Copy short link" title="Copy short link">
+          <svg class="icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="7" y="7" width="9" height="10" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M12.5 7V5.5A1.5 1.5 0 0 0 11 4H5.5A1.5 1.5 0 0 0 4 5.5V12a1.5 1.5 0 0 0 1.5 1.5H7" stroke="currentColor" stroke-width="1.4"/></svg>
+        </button>
+      </div>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section aria-labelledby="links-title">
+      <div class="list-header">
+        <h2 id="links-title">Recent links</h2>
+        <p id="link-summary">0 links</p>
+      </div>
+      <div class="link-list" id="link-list" aria-live="polite"></div>
+    </section>
+
+    <footer class="footer"><span>Shortform <strong>·</strong> Local link desk</span><span>SQLite / Ktor</span></footer>
+  </main>
+
+  <script>
+    const form = document.querySelector("#shorten-form");
+    const input = document.querySelector("#url-input");
+    const submitButton = document.querySelector("#submit-button");
+    const status = document.querySelector("#status");
+    const result = document.querySelector("#result");
+    const resultLink = document.querySelector("#result-link");
+    const linkList = document.querySelector("#link-list");
+    const date = new Intl.DateTimeFormat(undefined, { month: "short", day: "2-digit", year: "numeric" });
+
+    document.querySelector("#today").textContent = date.format(new Date()).toUpperCase();
+
+    function copyButton(label, url, className) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = className;
+      if (className === "copy-button") button.id = "result-copy";
+      button.setAttribute("aria-label", `Copy ${label}`);
+      button.title = `Copy ${label}`;
+      button.innerHTML = '<svg class="icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="7" y="7" width="9" height="10" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M12.5 7V5.5A1.5 1.5 0 0 0 11 4H5.5A1.5 1.5 0 0 0 4 5.5V12a1.5 1.5 0 0 0 1.5 1.5H7" stroke="currentColor" stroke-width="1.4"/></svg>';
+      button.addEventListener("click", async () => {
+        await navigator.clipboard.writeText(url);
+        button.setAttribute("aria-label", "Copied");
+        button.title = "Copied";
+        window.setTimeout(() => { button.setAttribute("aria-label", `Copy ${label}`); button.title = `Copy ${label}`; }, 1200);
+      });
+      return button;
+    }
+
+    async function loadLinks() {
+      const response = await fetch("/api/links");
+      if (!response.ok) throw new Error("Could not load saved links.");
+      const links = await response.json();
+      const totalVisits = links.reduce((sum, link) => sum + link.clicks, 0);
+      document.querySelector("#link-count").textContent = links.length.toLocaleString();
+      document.querySelector("#visit-count").textContent = totalVisits.toLocaleString();
+      document.querySelector("#link-summary").textContent = `${links.length} ${links.length === 1 ? "link" : "links"}`;
+      linkList.replaceChildren();
+
+      if (links.length === 0) {
+        const empty = document.createElement("p");
+        empty.className = "empty-state";
+        empty.textContent = "Your shortened links will appear here.";
+        linkList.append(empty);
+        return;
+      }
+
+      for (const link of links) {
+        const shortUrl = `${window.location.origin}/${link.code}`;
+        const row = document.createElement("div");
+        row.className = "link-row";
+
+        const shortAnchor = document.createElement("a");
+        shortAnchor.className = "link-short";
+        shortAnchor.href = `/${encodeURIComponent(link.code)}`;
+        shortAnchor.textContent = shortUrl;
+        shortAnchor.title = shortUrl;
+
+        const target = document.createElement("span");
+        target.className = "link-target";
+        target.textContent = link.targetUrl;
+        target.title = link.targetUrl;
+
+        const clicks = document.createElement("span");
+        clicks.className = "link-clicks";
+        clicks.textContent = `${link.clicks} ${link.clicks === 1 ? "visit" : "visits"}`;
+        clicks.title = `Created ${date.format(new Date(link.createdAt))}`;
+
+        row.append(shortAnchor, target, clicks, copyButton("short link", shortUrl, "row-copy"));
+        linkList.append(row);
+      }
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      status.textContent = "";
+      result.hidden = true;
+      submitButton.disabled = true;
+
+      try {
+        const response = await fetch("/api/links", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url: input.value })
+        });
+        const body = await response.json();
+        if (!response.ok) throw new Error(body.error || "Could not shorten that URL.");
+
+        resultLink.href = body.shortUrl;
+        resultLink.textContent = body.shortUrl;
+        document.querySelector("#result-copy").replaceWith(copyButton("short link", body.shortUrl, "copy-button"));
+        result.hidden = false;
+        input.value = "";
+        await loadLinks();
+      } catch (error) {
+        status.textContent = error.message || "Something went wrong. Try again.";
+      } finally {
+        submitButton.disabled = false;
+      }
+    });
+
+    loadLinks().catch((error) => { status.textContent = error.message; });
+  </script>
+</body>
+</html>
